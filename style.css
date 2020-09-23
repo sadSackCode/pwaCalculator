@@ -15,12 +15,7 @@ body {
   place-content: center;
 }
 
-#equals {
-  -ms-grid-row-span: 2;
-      grid-row-end: span 2;
-}
-
-.button {
+button {
   width: 100%;
   height: 100%;
   border-radius: 5px;
@@ -32,6 +27,17 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+button > span {
+  font-size: 1rem;
+  text-align: left;
+}
+
+.screen {
+  width: 300px;
+  min-height: 100px;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .button__container {
@@ -51,18 +57,18 @@ body {
   gap: 0.5em 0.2em;
 }
 
-.button--red {
+.red {
   background-color: red;
   color: white;
 }
 
-.button--white {
+.white {
   background-color: white;
   color: blue;
 }
 
-.button > span {
-  font-size: 1rem;
-  text-align: left;
+.span-two {
+  -ms-grid-row-span: 2;
+      grid-row-end: span 2;
 }
 /*# sourceMappingURL=style.css.map */

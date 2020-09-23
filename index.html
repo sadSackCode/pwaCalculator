@@ -7,32 +7,33 @@
     <title>AI-108 Calculator</title>
 </head>
 <body>
+    <div class="screen"></div>
     <div class="button__container">
-        <button id="negative" class="button button--red"><span>+/-</span></button>
-        <button id="sqroot" class="button button--red"><span>√</span></button>
-        <button id="percent" class="button button--red"><span>%</span></button>
-        <button id="divide" class="button button--red"><span>÷</span></button>
-        <button id="mrc" class="button button--red"><span>MRC</span></button>
-        <button id="m-" class="button button--red"><span>M-</span></button>
-        <button id="m+" class="button button--red"><span>M+</span></button>
-        <button id="multiply" class="button button--red"><span>X</span></button>
-        <button id="7" class="button button--white"><span>7</span></button>
-        <button id="8" class="button button--white"><span>8</span></button>
-        <button id="9" class="button button--white"><span>9</span></button>
-        <button id="minus" class="button button--red"><span>-</span></button>
-        <button id="4" class="button button--white"><span>4</span></button>
-        <button id="5" class="button button--white"><span>5</span></button>
-        <button id="6" class="button button--white"><span>6</span></button>
-        <button id="plus" class="button button--red"><span>+</span></button>
-        <button id="1" class="button button--white"><span>1</span></button>
-        <button id="2" class="button button--white"><span>2</span></button>
-        <button id="3" class="button button--white"><span>3</span></button>
-        <button id="equals" class="button button--red"><span>=</span></button>
-        <button id="on" class="button button--red"><span>ON/C</span></button>
-        <button id="0" class="button button--white"><span>0</span></button>
-        <button id="decimal" class="button button--white"><span>.</span></button>
+        <button data-negative class="red"><span>+/-</span></button>
+        <button data-square-root class="red"><span>√</span></button>
+        <button data-percent class="red"><span>%</span></button>
+        <button data-operation class="red"><span>÷</span></button>
+        <button data-memory-recall class="red"><span>MRC</span></button>
+        <button data-memory-minus class="red"><span>M-</span></button>
+        <button data-memory-plus class="red"><span>M+</span></button>
+        <button data-operation class="red"><span>X</span></button>
+        <button data-number class="white"><span>7</span></button>
+        <button data-number class="white"><span>8</span></button>
+        <button data-number class="white"><span>9</span></button>
+        <button data-operation class="red"><span>-</span></button>
+        <button data-number class="white"><span>4</span></button>
+        <button data-number class="white"><span>5</span></button>
+        <button data-number class="white"><span>6</span></button>
+        <button data-operation class="red"><span>+</span></button>
+        <button data-number class="white"><span>1</span></button>
+        <button data-number class="white"><span>2</span></button>
+        <button data-number class="white"><span>3</span></button>
+        <button data-equals class="red span-two"><span>=</span></button>
+        <button data-on-clear class="red"><span>ON/C</span></button>
+        <button data-number class="white"><span>0</span></button>
+        <button data-number class="white"><span>.</span></button>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
