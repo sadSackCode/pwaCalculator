@@ -36,8 +36,62 @@ button > span {
 
 .screen {
   width: 300px;
-  min-height: 100px;
+  height: 50px;
   background-color: rgba(0, 0, 0, 0.25);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.screen__number {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  position: relative;
+}
+
+.screen__number * {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.screen__number__top {
+  -webkit-clip-path: polygon(10% 5%, 90% 5%, 75% 20%, 25% 20%);
+          clip-path: polygon(10% 5%, 90% 5%, 75% 20%, 25% 20%);
+}
+
+.screen__number__top-left {
+  -webkit-clip-path: polygon(8% 8%, 22% 22%, 22% 40.5%, 8% 48%);
+          clip-path: polygon(8% 8%, 22% 22%, 22% 40.5%, 8% 48%);
+}
+
+.screen__number__top-right {
+  -webkit-clip-path: polygon(78% 22%, 92% 8%, 92% 48%, 78% 40.5%);
+          clip-path: polygon(78% 22%, 92% 8%, 92% 48%, 78% 40.5%);
+}
+
+.screen__number__middle {
+  -webkit-clip-path: polygon(10% 50%, 25% 42.5%, 75% 42.5%, 90% 50%, 75% 57.5%, 25% 57.5%);
+          clip-path: polygon(10% 50%, 25% 42.5%, 75% 42.5%, 90% 50%, 75% 57.5%, 25% 57.5%);
+}
+
+.screen__number__bottom-left {
+  -webkit-clip-path: polygon(8% 52%, 22% 59.5%, 22% 78%, 8% 93%);
+          clip-path: polygon(8% 52%, 22% 59.5%, 22% 78%, 8% 93%);
+}
+
+.screen__number__bottom-right {
+  -webkit-clip-path: polygon(78% 59.5%, 92% 52%, 92% 93%, 78% 78%);
+          clip-path: polygon(78% 59.5%, 92% 52%, 92% 93%, 78% 78%);
+}
+
+.screen__number__bottom {
+  -webkit-clip-path: polygon(25% 80%, 75% 80%, 90% 95%, 10% 95%);
+          clip-path: polygon(25% 80%, 75% 80%, 90% 95%, 10% 95%);
 }
 
 .button__container {
