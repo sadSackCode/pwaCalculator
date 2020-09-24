@@ -10,6 +10,7 @@
 body {
   width: 100vw;
   height: 100vh;
+  background-color: #323232;
   display: -ms-grid;
   display: grid;
   place-content: center;
@@ -37,7 +38,7 @@ button > span {
 .screen {
   width: 300px;
   height: 50px;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(235, 235, 235, 0.876);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -53,7 +54,7 @@ button > span {
 .screen__number * {
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: rgba(32, 32, 32, 0.2);
   position: absolute;
   top: 0;
   left: 0;
@@ -97,7 +98,7 @@ button > span {
 .button__container {
   width: 300px;
   height: 350px;
-  background-color: blue;
+  background-color: #2626ff;
   padding: 0.5em;
   display: -ms-grid;
   display: grid;
@@ -112,13 +113,17 @@ button > span {
 }
 
 .red {
-  background-color: red;
-  color: white;
+  background-color: #ff3131;
+  color: #fffbef;
 }
 
 .white {
-  background-color: white;
-  color: blue;
+  background-color: #fffbef;
+  color: #2626ff;
+}
+
+.black {
+  background-color: #202020;
 }
 
 .span-two {
