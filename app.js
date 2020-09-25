@@ -179,15 +179,9 @@ const display = {
 };
 
 const compute = function(currentNumber, previousNumber, operation) {
-    if(operation === '+') {
-        logic.add(previousNumber, currentNumber);
-    } else if (operation === '-') {
-        logic.subtract(previousNumber, currentNumber);
-    } else if (operation === 'X') {
-        logic.multiply(previousNumber, currentNumber);
-    } else if (operation === '÷') {
-        logic.divide(previousNumber, currentNumber);
-    }
+  if (Object.keys(logic).includes(operation)) {
+    logic[operation](previousNumber, currentNumber);
+  }
 };
 
 const numberButtons = document.querySelectorAll('[data-number]');
@@ -211,7 +205,7 @@ numberButtons.forEach(button => {
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
         memory.updatePreviousNumber();
-        memory.updateOperation(button.innerText);
+        memory.updateOperation(button.getAttribute('data-operation'));
     })
 })
 equalsButton.addEventListener('click', () => {
