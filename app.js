@@ -44,7 +44,7 @@ const memory = {
             this.operation = undefined;
             console.log('currentNumber is ' + this.currentNumber + ' previousNumber is ' + this.previousNumber + ' operation is ' + this.operation);
             return;
-        } 
+        }
     }
 };
 const display = {
@@ -95,13 +95,9 @@ const display = {
         }
     },
     clearBlock(digitPlace) {
-        numberBlocks[digitPlace].children[0].classList.remove('black');
-        numberBlocks[digitPlace].children[1].classList.remove('black');
-        numberBlocks[digitPlace].children[2].classList.remove('black');
-        numberBlocks[digitPlace].children[3].classList.remove('black');
-        numberBlocks[digitPlace].children[4].classList.remove('black');
-        numberBlocks[digitPlace].children[5].classList.remove('black');
-        numberBlocks[digitPlace].children[6].classList.remove('black');
+        for(let i = 0; i < 6; i ++) {
+          numberBlocks[digitPlace].children[i].classList.remove('black');
+        }
     },
     clearAll() {
         for(let i = 0; i < 8; i ++) {
