@@ -2,7 +2,7 @@ $white: rgb(255, 251, 239);
 $blue: rgb(38, 38, 255);
 $red: rgb(255, 49, 49);
 $black: rgb(32, 32, 32);
-$gray: rgba(32, 32, 32, 0.2);
+$gray: rgba(46, 46, 46, 0.075);
 
 *,
 *::before,
@@ -10,6 +10,9 @@ $gray: rgba(32, 32, 32, 0.2);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+html {
+    font-family: sans-serif;
 }
 body {
     width: 100vw;
@@ -36,8 +39,35 @@ button {
     height: 50px;
     background-color: rgba(235, 235, 235, 0.876);
     display: flex;
+    &__memoryError {
+        padding: 0.25em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        &__memory {
+            color: $gray;
+            display: flex;
+            justify-content: center;
+        }
+        &__error {
+            color: $gray;
+            display: flex;
+            justify-content: center;
+        }
+    }
+    &__negative {
+        flex-grow: 1.5;
+        background-color: $gray;
+        clip-path: polygon(10% 50%, 25% 42.5%, 75% 42.5%, 90% 50%, 75% 57.5%, 25% 57.5%);
+    }
+    &__decimal {
+        width: 4px;
+        height: 4px;
+        margin: 43px 1px 5px;
+        background-color: $gray;
+    }
     &__number {
-        flex-grow: 1;
+        flex-grow: 1.5;
         position: relative;
         & * {
             width: 100%;

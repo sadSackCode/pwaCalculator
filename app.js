@@ -86,7 +86,10 @@ onClearButton.addEventListener('click', () => {
     memory.clear();
     display.clearAll();
     display.resetNumberArray();
+    display.generateZero(7);
     console.log(display.numberArray);
 })
+
+display.generateZero(7);
 
 export { memory };
