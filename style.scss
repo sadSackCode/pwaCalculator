@@ -37,8 +37,25 @@ button {
 .screen {
     width: 300px;
     height: 50px;
-    background-color: rgba(235, 235, 235, 0.876);
+    border-radius: 5px;
+    background-color: rgb(235, 235, 235);
+    // background-color: red;
+    margin-top: 2em;
+    margin-right: auto;
+    margin-left: auto;
     display: flex;
+    position: relative;
+    z-index: 2;
+    &::before {
+        // content: "";
+        width: 310px;
+        height: 55px;
+        background-color: $black;
+        position: absolute;
+        top: -2.5px;
+        left: -5px;
+        z-index: -1;
+    }
     &__memoryError {
         padding: 0.25em;
         display: flex;
@@ -100,16 +117,32 @@ button {
         }
     }
 }
+.calculatorTop {
+    width: 350px;
+    height: 150px;
+    background-color: $blue;
+    border-radius: 5px 5px 0 0;
+}
+.calculatorBottom {
+    width: 350px;
+    height: 425px;
+    background-color: $blue;
+    border-radius: 0 0 25px 25px;
+    border-top: 1px solid;
+}
 .button__container {
     width: 300px;
     height: 350px;
     background-color: $blue;
     padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid;
+    margin: 25px auto auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
     align-items: stretch;
-    gap: 0.5em 0.2em;
+    gap: 0.75em 0.5em;
 }
 .red {
     background-color: $red;
