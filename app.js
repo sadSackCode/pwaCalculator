@@ -30,6 +30,7 @@ const memory = {
     clear() {
         if(this.currentNumber) {
             this.currentNumber = '';
+            this.decimal = 7;
             console.log('currentNumber is ' + this.currentNumber + ' previousNumber is ' + this.previousNumber + ' operation is ' + this.operation);
             return;
         } else if(this.previousNumber) {
@@ -48,6 +49,7 @@ const compute = function(currentNumber, previousNumber, operation) {
 };
 
 const numberButtons = document.querySelectorAll('[data-number]');
+const decimalButton = document.querySelector('[data-decimal]');
 const operationButtons = document.querySelectorAll('[data-operation]');
 const equalsButton = document.querySelector('[data-equals]');
 const onClearButton = document.querySelector('[data-on-clear]');
@@ -61,35 +63,52 @@ const memoryPlusButton = document.querySelector('[data-memory-plus]');
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         if(memory.previousNumber && !memory.currentNumber) {
-            display.resetNumberArray();
+            display.resetDecimal();
             display.updateDisplay();
         }
+        if(display.decimal > 0 || display.decimal === 0) {
+            document.getElementsByClassName('screen__decimal')[display.decimal].classList.remove('black');
+            display.decimal = display.decimal - 1;
+            document.getElementsByClassName('screen__decimal')[display.decimal].classList.add('black');
+        }
         memory.updateCurrentNumber(button.innerText);
+        display.updateCurrentNumber(button.innerText);
         display.updateDisplay();
     })
+})
+decimalButton.addEventListener('click', () => {
+    if(!memory.currentNumber) {
+        display.currentNumber = '0';
+    }
+    display.decimal = 7;
+    memory.updateCurrentNumber('.');
+    console.log(memory.currentNumber);
 })
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
         memory.updatePreviousNumber();
         memory.updateOperation(button.getAttribute('data-operation'));
+        display.currentNumber = '';
     })
 })
 equalsButton.addEventListener('click', () => {
     memory.parseCurrentNumber();
     const total = compute(memory.currentNumber, memory.previousNumber, memory.operation);
     memory.currentNumber = total.toString();
-    console.log(memory.currentNumber);
-    display.resetNumberArray();
+    display.currentNumber = total.toString();
     display.updateDisplay();
 })
 onClearButton.addEventListener('click', () => {
     memory.clear();
     display.clearAll();
+    display.resetDecimal();
     display.resetNumberArray();
+    display.currentNumber = '';
     display.generateZero(7);
     console.log(display.numberArray);
 })
-
-display.generateZero(7);
+negativeButton.addEventListener('click', () => {
+    console.log(display.numberArray.length - memory.currentNumber.length - 1);
+})
 
 export { memory };

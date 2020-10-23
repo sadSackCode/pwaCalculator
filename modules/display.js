@@ -1,24 +1,35 @@
 import { memory } from '../app.js';
 
 const numberBlocks = document.querySelectorAll('.screen__number');
+const decimalBlocks = document.querySelectorAll('.screen__decimal');
 
 const display = {
+    currentNumber: '',
     numberArray: ['','','','','','','',''],
+    decimal: false,
+    updateCurrentNumber(number) {
+        this.currentNumber = this.currentNumber + number;
+    },
     resetNumberArray() {
         this.numberArray = ['','','','','','','',''];
     },
     updateNumberArray() {
-        const displayNumber = memory.currentNumber.split('');
-        displayNumber.forEach(num => {
+        const displayNumber = this.currentNumber.split('');
+        for(let i = 0; i < displayNumber.length; i++) {
+            if(displayNumber[i] === '.') {
+                this.decimal = displayNumber.length - i;
+                this.clearDecimal();
+                decimalBlocks[this.numberArray.length - this.decimal].classList.add('black');
+            } else {
             this.numberArray.shift();
-            this.numberArray.push(num);
-        })
+            this.numberArray.push(displayNumber[i]);
+            }
+        }
     },
     updateDisplay() {
         this.clearAll();
         this.resetNumberArray();
         this.updateNumberArray();
-        console.log(this.numberArray);
         for(let i = this.numberArray.length - 1; i >= 0; i--) {
             if(this.numberArray[i] === '1') {
                 this.generateOne(i);
@@ -56,6 +67,16 @@ const display = {
         for(let i = 0; i <= 6; i++) {
             numberBlocks[digitPlace].children[i].classList.remove('black');
         }
+    },
+    clearDecimal() {
+        for(let i = 0; i < decimalBlocks.length; i++) {
+            decimalBlocks[i].classList.remove('black');
+        }
+    },
+    resetDecimal() {
+        this.clearDecimal();
+        decimalBlocks[7].classList.add('black');
+        this.decimal = false;
     },
     clearAll() {
         for(let i = 0; i < 8; i ++) {
@@ -131,5 +152,9 @@ const display = {
         numberBlocks[digitPlace].children[6].className += ' black';
     }
 };
+
+display.generateZero(7);
+
+document.getElementsByClassName('screen__decimal')[7].classList.add('black');
 
 export default display;

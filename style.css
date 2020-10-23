@@ -65,7 +65,12 @@ button > span {
 }
 
 .screen__memoryError {
-  padding: 0.25em;
+  font-size: 1.25em;
+  font-weight: 800;
+  padding: 0.15em;
+  -webkit-box-flex: .5;
+      -ms-flex-positive: .5;
+          flex-grow: .5;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,6 +81,7 @@ button > span {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+  position: relative;
 }
 
 .screen__memoryError__memory {
@@ -88,6 +94,15 @@ button > span {
           justify-content: center;
 }
 
+.screen__memoryError__memory::after {
+  content: "_";
+  font-weight: 1000;
+  position: absolute;
+  top: 12%;
+  left: 32%;
+  color: rgba(46, 46, 46, 0.075);
+}
+
 .screen__memoryError__error {
   color: rgba(46, 46, 46, 0.075);
   display: -webkit-box;
@@ -98,20 +113,10 @@ button > span {
           justify-content: center;
 }
 
-.screen__negative {
-  -webkit-box-flex: 1.5;
-      -ms-flex-positive: 1.5;
-          flex-grow: 1.5;
-  background-color: rgba(46, 46, 46, 0.075);
-  -webkit-clip-path: polygon(10% 50%, 25% 42.5%, 75% 42.5%, 90% 50%, 75% 57.5%, 25% 57.5%);
-          clip-path: polygon(10% 50%, 25% 42.5%, 75% 42.5%, 90% 50%, 75% 57.5%, 25% 57.5%);
-}
-
 .screen__decimal {
-  width: 4px;
+  width: 3px;
   height: 4px;
   margin: 43px 1px 5px;
-  background-color: rgba(46, 46, 46, 0.075);
 }
 
 .screen__number {

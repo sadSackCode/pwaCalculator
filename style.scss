@@ -39,7 +39,6 @@ button {
     height: 50px;
     border-radius: 5px;
     background-color: rgb(235, 235, 235);
-    // background-color: red;
     margin-top: 2em;
     margin-right: auto;
     margin-left: auto;
@@ -57,31 +56,41 @@ button {
         z-index: -1;
     }
     &__memoryError {
-        padding: 0.25em;
+        font-size: 1.25em;
+        font-weight: 800;
+        // background-color: green;
+        padding: 0.15em;
+        flex-grow: .5;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
+        position: relative;
         &__memory {
             color: $gray;
+            // background-color: red;
             display: flex;
             justify-content: center;
+            &::after {
+                content: "_";
+                font-weight: 1000;
+                position: absolute;
+                top: 12%;
+                left: 32%;
+                color: $gray;
+            }
         }
         &__error {
             color: $gray;
+            // background-color: blue;
             display: flex;
             justify-content: center;
         }
     }
-    &__negative {
-        flex-grow: 1.5;
-        background-color: $gray;
-        clip-path: polygon(10% 50%, 25% 42.5%, 75% 42.5%, 90% 50%, 75% 57.5%, 25% 57.5%);
-    }
     &__decimal {
-        width: 4px;
+        width: 3px;
         height: 4px;
         margin: 43px 1px 5px;
-        background-color: $gray;
+        // background-color: $gray;
     }
     &__number {
         flex-grow: 1.5;
