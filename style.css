@@ -44,6 +44,7 @@ button > span {
   height: 50px;
   border-radius: 5px;
   background-color: #ebebeb;
+  padding: 0.15em;
   margin-top: 2em;
   margin-right: auto;
   margin-left: auto;
@@ -67,7 +68,6 @@ button > span {
 .screen__memoryError {
   font-size: 1.25em;
   font-weight: 800;
-  padding: 0.15em;
   -webkit-box-flex: .5;
       -ms-flex-positive: .5;
           flex-grow: .5;
@@ -78,9 +78,9 @@ button > span {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   position: relative;
 }
 
@@ -94,13 +94,9 @@ button > span {
           justify-content: center;
 }
 
-.screen__memoryError__memory::after {
-  content: "_";
-  font-weight: 1000;
-  position: absolute;
-  top: 12%;
-  left: 32%;
-  color: rgba(46, 46, 46, 0.075);
+.screen__memoryError__negative {
+  width: 100%;
+  height: 100%;
 }
 
 .screen__memoryError__error {
@@ -117,6 +113,7 @@ button > span {
   width: 3px;
   height: 4px;
   margin: 43px 1px 5px;
+  background-color: rgba(46, 46, 46, 0.075);
 }
 
 .screen__number {

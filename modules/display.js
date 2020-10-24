@@ -2,11 +2,13 @@ import { memory } from '../app.js';
 
 const numberBlocks = document.querySelectorAll('.screen__number');
 const decimalBlocks = document.querySelectorAll('.screen__decimal');
+const negativeBlock = document.querySelector('.screen__memoryError__negative');
 
 const display = {
     currentNumber: '',
     numberArray: ['','','','','','','',''],
     decimal: false,
+    negative: false,
     updateCurrentNumber(number) {
         this.currentNumber = this.currentNumber + number;
     },
@@ -15,6 +17,10 @@ const display = {
     },
     updateNumberArray() {
         const displayNumber = this.currentNumber.split('');
+        if(displayNumber[0] === '-') {
+            displayNumber.shift();
+            this.negative = true;
+        }
         for(let i = 0; i < displayNumber.length; i++) {
             if(displayNumber[i] === '.') {
                 this.decimal = displayNumber.length - i;
@@ -23,6 +29,9 @@ const display = {
             } else {
             this.numberArray.shift();
             this.numberArray.push(displayNumber[i]);
+            }
+            if(displayNumber[0] === '-') {
+                this.negative = true;
             }
         }
     },
@@ -62,6 +71,21 @@ const display = {
                 this.generateZero(i);
             }
         }
+        if(this.negative === true) {
+            let digitPlace = display.numberArray.length - display.currentNumber.length - 1;
+            if(digitPlace === 7) {
+                digitPlace = 6;
+                this.generateZero(7);
+            }
+            if(digitPlace < 0) {
+                negativeBlock.className += ' black';
+                return;
+            }
+            this.generateNegative(digitPlace);
+        }
+        if(!this.negative && !display.currentNumber) {
+            this.generateZero(7);
+        }
     },
     clearBlock(digitPlace) {
         for(let i = 0; i <= 6; i++) {
@@ -78,10 +102,14 @@ const display = {
         decimalBlocks[7].classList.add('black');
         this.decimal = false;
     },
+    clearNegative() {
+        negativeBlock.classList.remove('black');
+    },
     clearAll() {
         for(let i = 0; i < 8; i ++) {
             this.clearBlock(i);
         }
+        this.clearNegative();
     },
     generateOne(digitPlace) {
         numberBlocks[digitPlace].children[2].className += ' black';
@@ -150,6 +178,9 @@ const display = {
         numberBlocks[digitPlace].children[4].className += ' black';
         numberBlocks[digitPlace].children[5].className += ' black';
         numberBlocks[digitPlace].children[6].className += ' black';
+    },
+    generateNegative(digitPlace) {
+        numberBlocks[digitPlace].children[3].className += ' black';
     }
 };
 

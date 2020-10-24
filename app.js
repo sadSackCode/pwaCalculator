@@ -77,6 +77,11 @@ numberButtons.forEach(button => {
     })
 })
 decimalButton.addEventListener('click', () => {
+    if(memory.previousNumber && !memory.currentNumber) {
+        display.currentNumber = '0';
+        display.resetDecimal();
+        display.updateDisplay();
+    }
     if(!memory.currentNumber) {
         display.currentNumber = '0';
     }
@@ -89,6 +94,7 @@ operationButtons.forEach(button => {
         memory.updatePreviousNumber();
         memory.updateOperation(button.getAttribute('data-operation'));
         display.currentNumber = '';
+        display.negative = false;
     })
 })
 equalsButton.addEventListener('click', () => {
@@ -96,6 +102,7 @@ equalsButton.addEventListener('click', () => {
     const total = compute(memory.currentNumber, memory.previousNumber, memory.operation);
     memory.currentNumber = total.toString();
     display.currentNumber = total.toString();
+    display.resetDecimal();
     display.updateDisplay();
 })
 onClearButton.addEventListener('click', () => {
@@ -108,7 +115,18 @@ onClearButton.addEventListener('click', () => {
     console.log(display.numberArray);
 })
 negativeButton.addEventListener('click', () => {
-    console.log(display.numberArray.length - memory.currentNumber.length - 1);
+    if(memory.currentNumber[0] === '-') {
+        memory.currentNumber = memory.currentNumber.substring(1);
+        display.negative = false;
+    } else {
+        const neg = '-';
+        memory.currentNumber = neg.concat('', memory.currentNumber);
+        display.negative = true;
+    }
+    display.updateDisplay();
+    console.log(memory.currentNumber);
+    console.log(display.negative);
+    console.log(display.numberArray.length - memory.currentNumber.length);
 })
 
 export { memory };

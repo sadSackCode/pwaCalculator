@@ -39,6 +39,7 @@ button {
     height: 50px;
     border-radius: 5px;
     background-color: rgb(235, 235, 235);
+    padding: 0.15em;
     margin-top: 2em;
     margin-right: auto;
     margin-left: auto;
@@ -59,25 +60,20 @@ button {
         font-size: 1.25em;
         font-weight: 800;
         // background-color: green;
-        padding: 0.15em;
         flex-grow: .5;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: space-between;
         position: relative;
         &__memory {
             color: $gray;
             // background-color: red;
             display: flex;
             justify-content: center;
-            &::after {
-                content: "_";
-                font-weight: 1000;
-                position: absolute;
-                top: 12%;
-                left: 32%;
-                color: $gray;
-            }
+        }
+        &__negative {
+            width: 100%;
+            height: 100%;
         }
         &__error {
             color: $gray;
@@ -90,7 +86,7 @@ button {
         width: 3px;
         height: 4px;
         margin: 43px 1px 5px;
-        // background-color: $gray;
+        background-color: $gray;
     }
     &__number {
         flex-grow: 1.5;
