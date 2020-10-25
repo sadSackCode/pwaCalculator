@@ -7,7 +7,7 @@ const logic = {
     divide: (a, b) => a / b
 };
 const memory = {
-    currentNumber: '',
+    currentNumber: '0',
     previousNumber: '',
     operation: undefined,
     updateCurrentNumber(number) {
@@ -16,7 +16,6 @@ const memory = {
     updatePreviousNumber() {
         this.previousNumber = parseFloat(this.currentNumber);
         this.currentNumber = '';
-        console.log(this.previousNumber);
     },
     parseCurrentNumber() {
         if(this.currentNumber) {
@@ -25,18 +24,15 @@ const memory = {
     },
     updateOperation(symbol) {
         this.operation = symbol;
-        console.log(symbol);
     },
     clear() {
         if(this.currentNumber) {
-            this.currentNumber = '';
+            this.currentNumber = '0';
             this.decimal = 7;
-            console.log('currentNumber is ' + this.currentNumber + ' previousNumber is ' + this.previousNumber + ' operation is ' + this.operation);
             return;
         } else if(this.previousNumber) {
             this.previousNumber = '';
             this.operation = undefined;
-            console.log('currentNumber is ' + this.currentNumber + ' previousNumber is ' + this.previousNumber + ' operation is ' + this.operation);
             return;
         } 
     }
@@ -62,14 +58,22 @@ const memoryPlusButton = document.querySelector('[data-memory-plus]');
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
-        if(memory.previousNumber && !memory.currentNumber) {
+        if(memory.previousNumber && memory.currentNumber !== '0') {
             display.resetDecimal();
+            display.negative = false;
             display.updateDisplay();
+        }
+        if(display.currentNumber.length === 8) {
+            return;
         }
         if(display.decimal > 0 || display.decimal === 0) {
             document.getElementsByClassName('screen__decimal')[display.decimal].classList.remove('black');
             display.decimal = display.decimal - 1;
             document.getElementsByClassName('screen__decimal')[display.decimal].classList.add('black');
+        }
+        if(memory.currentNumber === '0' && !display.decimal) {
+            memory.currentNumber = '';
+            display.currentNumber = '';
         }
         memory.updateCurrentNumber(button.innerText);
         display.updateCurrentNumber(button.innerText);
@@ -87,7 +91,6 @@ decimalButton.addEventListener('click', () => {
     }
     display.decimal = 7;
     memory.updateCurrentNumber('.');
-    console.log(memory.currentNumber);
 })
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -101,6 +104,7 @@ equalsButton.addEventListener('click', () => {
     memory.parseCurrentNumber();
     const total = compute(memory.currentNumber, memory.previousNumber, memory.operation);
     memory.currentNumber = total.toString();
+    memory.previousNumber = '';
     display.currentNumber = total.toString();
     display.resetDecimal();
     display.updateDisplay();
@@ -108,11 +112,10 @@ equalsButton.addEventListener('click', () => {
 onClearButton.addEventListener('click', () => {
     memory.clear();
     display.clearAll();
+    display.currentNumber = '0';
+    display.negative = false;
     display.resetDecimal();
-    display.resetNumberArray();
-    display.currentNumber = '';
-    display.generateZero(7);
-    console.log(display.numberArray);
+    display.updateDisplay();
 })
 negativeButton.addEventListener('click', () => {
     if(memory.currentNumber[0] === '-') {
@@ -124,9 +127,8 @@ negativeButton.addEventListener('click', () => {
         display.negative = true;
     }
     display.updateDisplay();
-    console.log(memory.currentNumber);
-    console.log(display.negative);
-    console.log(display.numberArray.length - memory.currentNumber.length);
 })
+
+display.updateDisplay();
 
 export { memory };

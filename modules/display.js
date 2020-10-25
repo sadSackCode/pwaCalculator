@@ -10,6 +10,10 @@ const display = {
     decimal: false,
     negative: false,
     updateCurrentNumber(number) {
+        if(this.currentNumber === '0' && this.decimal === false) {
+            this.currentNumber = number;
+            return;
+        }
         this.currentNumber = this.currentNumber + number;
     },
     resetNumberArray() {
@@ -19,6 +23,7 @@ const display = {
         const displayNumber = this.currentNumber.split('');
         if(displayNumber[0] === '-') {
             displayNumber.shift();
+            this.currentNumber = displayNumber;
             this.negative = true;
         }
         for(let i = 0; i < displayNumber.length; i++) {
@@ -29,9 +34,6 @@ const display = {
             } else {
             this.numberArray.shift();
             this.numberArray.push(displayNumber[i]);
-            }
-            if(displayNumber[0] === '-') {
-                this.negative = true;
             }
         }
     },
@@ -72,16 +74,16 @@ const display = {
             }
         }
         if(this.negative === true) {
-            let digitPlace = display.numberArray.length - display.currentNumber.length - 1;
-            if(digitPlace === 7) {
-                digitPlace = 6;
+            let negativePlace = display.numberArray.length - display.currentNumber.length - 1;
+            if(negativePlace === 7) {
+                negativePlace = 6;
                 this.generateZero(7);
             }
-            if(digitPlace < 0) {
+            if(negativePlace < 0) {
                 negativeBlock.className += ' black';
                 return;
             }
-            this.generateNegative(digitPlace);
+            this.generateNegative(negativePlace);
         }
         if(!this.negative && !display.currentNumber) {
             this.generateZero(7);
@@ -109,6 +111,7 @@ const display = {
         for(let i = 0; i < 8; i ++) {
             this.clearBlock(i);
         }
+        this.resetNumberArray();
         this.clearNegative();
     },
     generateOne(digitPlace) {
@@ -183,8 +186,6 @@ const display = {
         numberBlocks[digitPlace].children[3].className += ' black';
     }
 };
-
-display.generateZero(7);
 
 document.getElementsByClassName('screen__decimal')[7].classList.add('black');
 
