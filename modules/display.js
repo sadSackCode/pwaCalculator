@@ -6,42 +6,86 @@ const negativeBlock = document.querySelector('.screen__memoryError__negative');
 
 const display = {
     currentNumber: '',
+    digits: '',
     numberArray: ['','','','','','','',''],
-    decimal: false,
-    negative: false,
-    updateCurrentNumber(number) {
-        if(this.currentNumber === '0' && this.decimal === false) {
-            this.currentNumber = number;
-            return;
+    decimal: NaN,
+    negative: NaN,
+    updateCurrentNumber() {
+        this.currentNumber = memory.currentNumber;
+    },
+    updateDigits() {
+        this.digits = this.currentNumber.match(/\d/g);
+    },
+    updateNumberArray() {
+        this.resetNumberArray();
+        if(this.digits) {
+            this.digits.forEach(digit => {
+                this.numberArray.shift();
+                this.numberArray.push(digit);
+            })
         }
-        this.currentNumber = this.currentNumber + number;
+    },
+    updateNegative() {
+        const digitsAndNegative = this.currentNumber.match(/[\d-]/g);
+        if(digitsAndNegative && !this.digits) { 
+            this.negative = 6;
+        } else if(digitsAndNegative && this.digits) {
+            this.negative = this.numberArray.length - digitsAndNegative.length;
+        } else {
+            this.negative = NaN;
+        }
+    },
+    updateDecimal() {
+        if(this.digits) {
+            const digitsAndDecimal = this.currentNumber.match(/[\d.]/g);
+            if(digitsAndDecimal.indexOf('.') > 0) {
+                const decimalValue = digitsAndDecimal.length - digitsAndDecimal.indexOf('.');
+                this.decimal = this.numberArray.length - decimalValue;
+            } else {
+                this.decimal = 7;
+            }
+        } else {
+            this.decimal = 7;
+        }
     },
     resetNumberArray() {
         this.numberArray = ['','','','','','','',''];
     },
-    updateNumberArray() {
-        const displayNumber = this.currentNumber.split('');
-        if(displayNumber[0] === '-') {
-            displayNumber.shift();
-            this.currentNumber = displayNumber;
-            this.negative = true;
+    clearNegativeBlock() {
+        negativeBlock.classList.remove('black');
+    },
+    clearDecimalBlocks() {
+        for(let i = 0; i < decimalBlocks.length; i++) {
+            decimalBlocks[i].classList.remove('black');
         }
-        for(let i = 0; i < displayNumber.length; i++) {
-            if(displayNumber[i] === '.') {
-                this.decimal = displayNumber.length - i;
-                this.clearDecimal();
-                decimalBlocks[this.numberArray.length - this.decimal].classList.add('black');
-            } else {
-            this.numberArray.shift();
-            this.numberArray.push(displayNumber[i]);
+    },
+    clearBlocks() {
+        for(let i = 0; i < 8; i++) {
+            for(let j = 0; j <= 6; j++) {
+                numberBlocks[i].children[j].classList.remove('black');
             }
         }
     },
+    clearDisplay() {
+        this.clearBlocks();
+        this.clearDecimalBlocks();
+        this.clearNegativeBlock();
+    },
     updateDisplay() {
-        this.clearAll();
-        this.resetNumberArray();
+        this.clearDisplay();
+        this.updateCurrentNumber();
+        this.updateDigits();
         this.updateNumberArray();
-        for(let i = this.numberArray.length - 1; i >= 0; i--) {
+        this.updateNegative();
+        this.updateDecimal();
+        this.generateDecimal(this.decimal);
+        if(this.negative || this.negative === 0) {
+            this.generateNegative(this.negative);
+        }
+        if(!this.digits) {
+            this.generateZero(7);
+        }
+        for(let i = 0; i < this.numberArray.length; i++) {
             if(this.numberArray[i] === '1') {
                 this.generateOne(i);
             }
@@ -73,46 +117,6 @@ const display = {
                 this.generateZero(i);
             }
         }
-        if(this.negative === true) {
-            let negativePlace = display.numberArray.length - display.currentNumber.length - 1;
-            if(negativePlace === 7) {
-                negativePlace = 6;
-                this.generateZero(7);
-            }
-            if(negativePlace < 0) {
-                negativeBlock.className += ' black';
-                return;
-            }
-            this.generateNegative(negativePlace);
-        }
-        if(!this.negative && !display.currentNumber) {
-            this.generateZero(7);
-        }
-    },
-    clearBlock(digitPlace) {
-        for(let i = 0; i <= 6; i++) {
-            numberBlocks[digitPlace].children[i].classList.remove('black');
-        }
-    },
-    clearDecimal() {
-        for(let i = 0; i < decimalBlocks.length; i++) {
-            decimalBlocks[i].classList.remove('black');
-        }
-    },
-    resetDecimal() {
-        this.clearDecimal();
-        decimalBlocks[7].classList.add('black');
-        this.decimal = false;
-    },
-    clearNegative() {
-        negativeBlock.classList.remove('black');
-    },
-    clearAll() {
-        for(let i = 0; i < 8; i ++) {
-            this.clearBlock(i);
-        }
-        this.resetNumberArray();
-        this.clearNegative();
     },
     generateOne(digitPlace) {
         numberBlocks[digitPlace].children[2].className += ' black';
@@ -183,7 +187,16 @@ const display = {
         numberBlocks[digitPlace].children[6].className += ' black';
     },
     generateNegative(digitPlace) {
+        if(digitPlace < 0) {
+            negativeBlock.className += ' black';
+            return;
+        }
         numberBlocks[digitPlace].children[3].className += ' black';
+    },
+    generateDecimal(decimalPlace) {
+        if(decimalPlace < 8 || decimalPlace === 0) {
+            decimalBlocks[decimalPlace].className += ' black';
+        }
     }
 };
 
