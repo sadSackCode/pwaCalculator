@@ -9,7 +9,8 @@ const logic = {
 const memory = {
     currentNumber: '',
     previousNumber: '',
-    operation: undefined,
+    operation: '',
+    error: false,
     updateCurrentNumber(number) {
         this.currentNumber = this.currentNumber + number;
     },
@@ -28,12 +29,11 @@ const memory = {
     clear() {
         if(this.currentNumber) {
             this.currentNumber = '';
-            return;
         } else if(this.previousNumber) {
             this.previousNumber = '';
-            this.operation = undefined;
-            return;
+            this.operation = '';
         } 
+        this.error = false;
     }
 };
 
@@ -57,6 +57,10 @@ const memoryPlusButton = document.querySelector('[data-memory-plus]');
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         if(display.digits && display.digits.length == 8) {
+            if(!memory.currentNumber) {
+                memory.updateCurrentNumber(button.innerText);
+                display.updateDisplay();
+            }
             return;
         }
         memory.updateCurrentNumber(button.innerText);
@@ -70,11 +74,32 @@ operationButtons.forEach(button => {
     })
 })
 equalsButton.addEventListener('click', () => {
-    memory.parseCurrentNumber();
-    const total = compute(memory.currentNumber, memory.previousNumber, memory.operation);
-    memory.currentNumber = total.toString();
-    memory.previousNumber = '';
-    display.updateDisplay();
+    if(memory.currentNumber && memory.previousNumber) {
+        memory.parseCurrentNumber();
+        memory.currentNumber = compute(memory.currentNumber, memory.previousNumber, memory.operation).toString();
+        const digits = memory.currentNumber.match(/\d/g)
+        if(digits.length > 8) {
+            let digitsAndDecimal = memory.currentNumber.match(/[\d.]/g);
+            if(digitsAndDecimal.indexOf('.') > 8 || digitsAndDecimal.indexOf('.') < 0) {
+                memory.error = true;
+                digitsAndDecimal = digitsAndDecimal.join('');
+                digitsAndDecimal = digitsAndDecimal.substring(0, 8);
+            } else {
+                memory.error = false;
+                digitsAndDecimal = parseFloat(digitsAndDecimal.join(''));
+                digitsAndDecimal = digitsAndDecimal.toPrecision(8);
+                digitsAndDecimal = digitsAndDecimal.toString();
+            }
+            if(memory.currentNumber[0] === '-') {
+                memory.currentNumber = '-' + digitsAndDecimal;
+            } else {
+                memory.currentNumber = digitsAndDecimal;
+            }
+        }
+        memory.previousNumber = '';
+        display.updateDisplay();
+        memory.currentNumber = '';
+    }
 })
 onClearButton.addEventListener('click', () => {
     memory.clear();

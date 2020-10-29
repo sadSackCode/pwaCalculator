@@ -216,6 +216,10 @@ button > span {
   background-color: #202020;
 }
 
+.black-text {
+  color: #202020;
+}
+
 .span-two {
   -ms-grid-row-span: 2;
       grid-row-end: span 2;

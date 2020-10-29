@@ -3,6 +3,7 @@ import { memory } from '../app.js';
 const numberBlocks = document.querySelectorAll('.screen__number');
 const decimalBlocks = document.querySelectorAll('.screen__decimal');
 const negativeBlock = document.querySelector('.screen__memoryError__negative');
+const errorBlock = document.querySelector('.screen__memoryError__error')
 
 const display = {
     currentNumber: '',
@@ -10,6 +11,7 @@ const display = {
     numberArray: ['','','','','','','',''],
     decimal: NaN,
     negative: NaN,
+    error: false,
     updateCurrentNumber() {
         this.currentNumber = memory.currentNumber;
     },
@@ -48,11 +50,21 @@ const display = {
             this.decimal = 7;
         }
     },
+    updateError() {
+        if(memory.error === true) {
+            this.error = true;
+        } else {
+            this.error = false;
+        }
+    },
     resetNumberArray() {
         this.numberArray = ['','','','','','','',''];
     },
     clearNegativeBlock() {
         negativeBlock.classList.remove('black');
+    },
+    clearErrorBlock() {
+        errorBlock.classList.remove('black-text');
     },
     clearDecimalBlocks() {
         for(let i = 0; i < decimalBlocks.length; i++) {
@@ -70,6 +82,7 @@ const display = {
         this.clearBlocks();
         this.clearDecimalBlocks();
         this.clearNegativeBlock();
+        this.clearErrorBlock();
     },
     updateDisplay() {
         this.clearDisplay();
@@ -77,6 +90,7 @@ const display = {
         this.updateDigits();
         this.updateNumberArray();
         this.updateNegative();
+        this.updateError();
         this.updateDecimal();
         this.generateDecimal(this.decimal);
         if(this.negative || this.negative === 0) {
@@ -84,6 +98,10 @@ const display = {
         }
         if(!this.digits) {
             this.generateZero(7);
+        }
+        if(this.error === true) {
+            console.log('hi');
+            this.generateError();
         }
         for(let i = 0; i < this.numberArray.length; i++) {
             if(this.numberArray[i] === '1') {
@@ -197,6 +215,9 @@ const display = {
         if(decimalPlace < 8 || decimalPlace === 0) {
             decimalBlocks[decimalPlace].className += ' black';
         }
+    },
+    generateError() {
+        errorBlock.className += ' black-text';
     }
 };
 
