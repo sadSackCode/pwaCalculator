@@ -28,11 +28,17 @@ const display = {
         }
     },
     updateNegative() {
-        const digitsAndNegative = this.currentNumber.match(/[\d-]/g);
-        if(digitsAndNegative && !this.digits) { 
-            this.negative = 6;
-        } else if(digitsAndNegative && this.digits) {
-            this.negative = this.numberArray.length - digitsAndNegative.length;
+        if(this.currentNumber) { 
+            if(this.currentNumber[0] === '-') {
+                const digitsAndNegative = this.currentNumber.match(/[\d-]/g);
+                if(!this.digits) {
+                    this.negative = 6;
+                } else {
+                this.negative = this.numberArray.length - digitsAndNegative.length;
+                }
+            } else {
+                this.negative = NaN;
+            } 
         } else {
             this.negative = NaN;
         }
@@ -100,7 +106,6 @@ const display = {
             this.generateZero(7);
         }
         if(this.error === true) {
-            console.log('hi');
             this.generateError();
         }
         for(let i = 0; i < this.numberArray.length; i++) {

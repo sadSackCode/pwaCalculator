@@ -32,7 +32,7 @@ const memory = {
         } else if(this.previousNumber) {
             this.previousNumber = '';
             this.operation = '';
-        } 
+        }
         this.error = false;
     }
 };
@@ -63,7 +63,11 @@ numberButtons.forEach(button => {
             }
             return;
         }
-        memory.updateCurrentNumber(button.innerText);
+        if(!memory.currentNumber && button.innerText === '.') {
+            memory.updateCurrentNumber('0.');
+        } else {
+            memory.updateCurrentNumber(button.innerText);
+        }
         display.updateDisplay();
     })
 })
