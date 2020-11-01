@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="/images/icons/icon-96x96.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#ff3131">
+    <meta name="theme-color" content="#ff3131">
     <title>AI-108 Calculator</title>
 </head>
 <body>
@@ -125,6 +130,7 @@
         </div>
     </div>
 
-    <script src="app.js" type="module" defer></script>
+    <script src="/modules/swActivation.js"></script>
+    <script async src="/modules/app.js" type="module"></script>
 </body>
 </html>

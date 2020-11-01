@@ -1,4 +1,4 @@
-import { memory } from '../app.js';
+import { memory } from './app.js';
 
 const numberBlocks = document.querySelectorAll('.screen__number');
 const decimalBlocks = document.querySelectorAll('.screen__decimal');
@@ -228,4 +228,4 @@ const display = {
 
 document.getElementsByClassName('screen__decimal')[7].classList.add('black');
 
-export default display;
+export { display };
