@@ -1,3 +1,13 @@
+const numberButtons = document.querySelectorAll('[data-number]');
+const operationButtons = document.querySelectorAll('[data-operation]');
+const equalsButton = document.querySelector('[data-equals]');
+const onClearButton = document.querySelector('[data-on-clear]');
+const negativeButton = document.querySelector('[data-negative]');
+const squareRootButton = document.querySelector('[data-square-root]');
+const percentButton = document.querySelector('[data-percent]');
+const memoryRecallButton = document.querySelector('[data-memory-recall]');
+const memoryMinusButton = document.querySelector('[data-memory-minus]');
+const memoryPlusButton = document.querySelector('[data-memory-plus]');
 const numberBlocks = document.querySelectorAll('.screen__number');
 const decimalBlocks = document.querySelectorAll('.screen__decimal');
 const negativeBlock = document.querySelector('.screen__memoryError__negative');
@@ -12,6 +22,7 @@ const logic = {
 const memory = {
     currentNumber: '',
     previousNumber: '',
+    constant: '',
     operation: '',
     error: false,
     updateCurrentNumber(number) {
@@ -259,23 +270,11 @@ const display = {
         errorBlock.className += ' black-text';
     }
 };
-
 const compute = function(currentNumber, previousNumber, operation) {
     if(Object.keys(logic).includes(operation)) {
         return logic[operation](previousNumber, currentNumber);
     }
 };
-
-const numberButtons = document.querySelectorAll('[data-number]');
-const operationButtons = document.querySelectorAll('[data-operation]');
-const equalsButton = document.querySelector('[data-equals]');
-const onClearButton = document.querySelector('[data-on-clear]');
-const negativeButton = document.querySelector('[data-negative]');
-const squareRootButton = document.querySelector('[data-square-root]');
-const percentButton = document.querySelector('[data-percent]');
-const memoryRecallButton = document.querySelector('[data-memory-recall]');
-const memoryMinusButton = document.querySelector('[data-memory-minus]');
-const memoryPlusButton = document.querySelector('[data-memory-plus]');
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -305,6 +304,9 @@ equalsButton.addEventListener('click', () => {
         if(memory.currentNumber) {
             memory.parseCurrentNumber();
             memory.currentNumber = compute(memory.currentNumber, memory.previousNumber, memory.operation).toString();
+        } else if(memory.operation == 'multiply') {
+            memory.constant = memory.previousNumber;
+            memory.currentNumber = compute(memory.constant, memory.previousNumber, memory.operation).toString();
         } else {
             memory.currentNumber = memory.previousNumber;
             memory.currentNumber = compute(memory.currentNumber, memory.previousNumber, memory.operation).toString();
@@ -328,8 +330,8 @@ equalsButton.addEventListener('click', () => {
                 memory.currentNumber = digitsAndDecimal;
             }
         }
-        memory.previousNumber = '';
         display.updateDisplay();
+        memory.updatePreviousNumber();
         memory.currentNumber = '';
     }
 })
