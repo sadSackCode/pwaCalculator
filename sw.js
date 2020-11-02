@@ -1,12 +1,10 @@
-const staticCacheName = 'site-static-v2';
-const dynamicCacheName = 'site-dynamic-v2';
+const staticCacheName = 'site-static-v1';
+const dynamicCacheName = 'site-dynamic-v1';
 const assets = [
     '/',
     '/index.html',
     '/css/style.css',
     '/modules/app.js',
-    '/modules/display.js',
-    '/modules/swActivation.js',
     '/favicon.png',
     '/manifest.json'
 ];
