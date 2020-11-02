@@ -4,7 +4,7 @@ const assets = [
     './',
     './index.html',
     './css/style.css',
-    './modules/app.js',
+    './js/app.js',
     './favicon.png',
     './manifest.json'
 ];
