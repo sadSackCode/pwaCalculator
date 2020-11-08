@@ -28,6 +28,27 @@ const memory = {
     updateCurrentNumber(number) {
         this.currentNumber = this.currentNumber + number;
     },
+    checkCurrentNumberLength() {
+        const digits = this.currentNumber.match(/\d/g)
+        if(digits.length > 8) {
+            let digitsAndDecimal = this.currentNumber.match(/[\d.]/g);
+            if(digitsAndDecimal.indexOf('.') > 8 || digitsAndDecimal.indexOf('.') < 0) {
+                this.error = true;
+                digitsAndDecimal = digitsAndDecimal.join('');
+                digitsAndDecimal = digitsAndDecimal.substring(0, 8);
+            } else {
+                this.error = false;
+                digitsAndDecimal = parseFloat(digitsAndDecimal.join(''));
+                digitsAndDecimal = digitsAndDecimal.toPrecision(8);
+                digitsAndDecimal = digitsAndDecimal.toString();
+            }
+            if(this.currentNumber[0] === '-') {
+                this.currentNumber = '-' + digitsAndDecimal;
+            } else {
+                this.currentNumber = digitsAndDecimal;
+            }
+        }
+    },
     updatePreviousNumber() {
         this.previousNumber = parseFloat(this.currentNumber);
         this.currentNumber = '';
@@ -143,7 +164,7 @@ const display = {
         this.updateNegative();
         this.updateError();
         this.updateDecimal();
-        this.generateDecimal(this.decimal);
+        this.generateDecimal();
         if(this.negative || this.negative === 0) {
             this.generateNegative(this.negative);
         }
@@ -261,9 +282,9 @@ const display = {
         }
         numberBlocks[digitPlace].children[3].className += ' black';
     },
-    generateDecimal(decimalPlace) {
-        if(decimalPlace < 8 || decimalPlace === 0) {
-            decimalBlocks[decimalPlace].className += ' black';
+    generateDecimal() {
+        if(this.decimal < 8 || this.decimal === 0) {
+            decimalBlocks[this.decimal].className += ' black';
         }
     },
     generateError() {
@@ -311,25 +332,7 @@ equalsButton.addEventListener('click', () => {
             memory.currentNumber = memory.previousNumber;
             memory.currentNumber = compute(memory.currentNumber, memory.previousNumber, memory.operation).toString();
         }
-        const digits = memory.currentNumber.match(/\d/g)
-        if(digits.length > 8) {
-            let digitsAndDecimal = memory.currentNumber.match(/[\d.]/g);
-            if(digitsAndDecimal.indexOf('.') > 8 || digitsAndDecimal.indexOf('.') < 0) {
-                memory.error = true;
-                digitsAndDecimal = digitsAndDecimal.join('');
-                digitsAndDecimal = digitsAndDecimal.substring(0, 8);
-            } else {
-                memory.error = false;
-                digitsAndDecimal = parseFloat(digitsAndDecimal.join(''));
-                digitsAndDecimal = digitsAndDecimal.toPrecision(8);
-                digitsAndDecimal = digitsAndDecimal.toString();
-            }
-            if(memory.currentNumber[0] === '-') {
-                memory.currentNumber = '-' + digitsAndDecimal;
-            } else {
-                memory.currentNumber = digitsAndDecimal;
-            }
-        }
+        memory.checkCurrentNumberLength();
         display.updateDisplay();
         memory.updatePreviousNumber();
         memory.currentNumber = '';
@@ -351,8 +354,9 @@ negativeButton.addEventListener('click', () => {
 squareRootButton.addEventListener('click', () => {
     if(memory.currentNumber) {
         const squareRoot = Math.sqrt(memory.currentNumber);
-        memory.currentNumber = '';
-        memory.updateCurrentNumber(squareRoot);
+        memory.currentNumber = squareRoot.toString();
+        memory.checkCurrentNumberLength();
+        console.log('memory.currentNumber is ' + memory.currentNumber);
         display.updateDisplay();
     }
 })
